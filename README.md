@@ -5,7 +5,7 @@ This is Tpay polish payment broker library, it should avoid few (many?) headache
 The current version is highly experimental (and it's just python class module) - in future it should contain enough login to plug-in it as Django application in `INSTALLED_APPS`.
 
 ### Features:
-* Based on code from working, quite popular project (tested with multiple customers).
+* Based on *my own* code from working, quite popular project (tested with multiple customers).
 * Just SINGLE dependency (not even Django is required for now, but `requests` library is a must).
 * Probably in future it will depend on Django Money for multicurrency handling.
 * Written in extensible way!
