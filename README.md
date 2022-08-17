@@ -11,12 +11,12 @@ The current version is highly experimental (and it's just python class module) -
 * Written in extensible way!
 
 ### Settings:
-`TPAY_CLIENT_ID` - client ID from tpay settings.
-`TPAY_CLIENT_SECRET` - secret from tpay settings.
-`TPAY_RETURN_URL` - TPAY IPN settings, MUST BE SET to django endpoint (can be tested with ngrok).
-`TPAY_MERCHANT_ID` - as it says... it's tpay merchant id.
-`TPAY_DESCRIPTION` - TPay payment description.
-`TPAY_MERCHANT` - TPay merchant description.
+`TPAY_CLIENT_ID` - client ID from tpay settings.  
+`TPAY_CLIENT_SECRET` - secret from tpay settings.  
+`TPAY_RETURN_URL` - TPAY IPN settings, MUST BE SET to django endpoint (can be tested with ngrok).  
+`TPAY_MERCHANT_ID` - as it says... it's tpay merchant id.  
+`TPAY_DESCRIPTION` - TPay payment description.  
+`TPAY_MERCHANT` - TPay merchant description.  
 
 ### Can I get your help?
 Sure, but don't expect I will respond in quite short amount of time. The class can't be plugged by simple way into Django code now,
