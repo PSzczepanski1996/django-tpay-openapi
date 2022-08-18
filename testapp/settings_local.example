@@ -1,0 +1,13 @@
+DEBUG = True
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.contrib.gis.db.backends.postgis',
+        'NAME': 'tpay_demoapp',
+        'USER': 'patryk',
+        'PASSWORD': '',
+        'HOST': 'localhost',
+        'PORT': '5432',
+    }
+}
+
+EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
