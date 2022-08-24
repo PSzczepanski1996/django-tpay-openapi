@@ -1,6 +1,8 @@
 name: Django CI
 
 on:
+  push:
+    branches: [ master ]
   pull_request:
     branches: [ master ]
 
@@ -21,7 +23,8 @@ jobs:
         python-version: ${{ matrix.python-version }}
     - name: Install Dependencies
       run: |
-        pip --disable-pip-version-check install --no-compile -r requirements_dev.txt
-    - name: Run Flake8
+        pip --disable-pip-version-check install --no-compile -r requirements_tests.txt
+    - name: Run Tests
       run: |
         flake8 .
+        python manage.py test
