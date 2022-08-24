@@ -27,4 +27,4 @@ jobs:
     - name: Run Tests
       run: |
         flake8 .
-        pytest --cov=testapp
+        pytest --cov=testapp --cov=tpay_module
