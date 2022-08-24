@@ -118,6 +118,7 @@ class TPayModule(object):
                 f'{self.api_url}/transactions',
                 json=data, headers=self.get_headers(),
             ).json()
+            print(response_data)
             if response_data.get('result', 'success') == 'success':
                 self.save_order_to_db(
                     payment_number,

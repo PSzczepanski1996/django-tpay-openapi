@@ -8,6 +8,7 @@ from django.conf import settings
 from django.http import Http404
 from django.http import HttpResponse
 from django.views import View
+from django.views.decorators.csrf import csrf_exempt
 
 # Project
 from tpay_module.models import TPayPayment
@@ -28,6 +29,7 @@ class TPayIpnHandler(View):
         """Execute custom callback."""
         pass
 
+    @csrf_exempt
     def dispatch(self, request, *args, **kwargs):  # noqa: D102
         if getattr(settings, 'TPAY_DISABLE', False):
             raise Http404
@@ -36,6 +38,7 @@ class TPayIpnHandler(View):
     def post(self, request, *args, **kwargs):  # noqa: D102
         data = request.POST
         payment_number = data['tr_crc']
+        print(data)
         try:
             payment = self.model.objects.get(number=payment_number)
             payment_part = f'{payment.price.amount}{payment.number}'

@@ -8,5 +8,5 @@ from tpay_module.views import TPayIpnHandler
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('tpay_ipn', TPayIpnHandler.as_view(), name='tpay_ipn'),
+    path('tpay-ipn/', TPayIpnHandler.as_view(), name='tpay_ipn'),
 ]
