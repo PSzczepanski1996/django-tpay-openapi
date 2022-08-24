@@ -12,6 +12,9 @@ from django.utils.translation import gettext_lazy as _
 # 3rd-party
 import requests
 
+# Project
+from tpay_module.utils import get_tpay_settings
+
 
 class TPayModule(object):
     """
@@ -40,8 +43,9 @@ class TPayModule(object):
 
     def get_headers(self):
         """Get headers for OAuth 2.0 auth using new TPay OpenAPI."""
-        tpay_client_id = getattr(settings, 'TPAY_CLIENT_ID', None)
-        tpay_client_secret = getattr(settings, 'TPAY_CLIENT_SECRET', None)
+        settings_dict = get_tpay_settings()
+        tpay_client_id = settings_dict.get('TPAY_CLIENT_ID', None)
+        tpay_client_secret = settings_dict.get('TPAY_CLIENT_SECRET', None)
         if not tpay_client_id or not tpay_client_secret:
             raise Http404
         token_response = requests.post(f'{self.api_url}/oauth/auth', data={
@@ -76,7 +80,9 @@ class TPayModule(object):
         payment_group_id=None,
     ):
         """Return url that proceeds to created transaction."""
-        if not getattr(settings, 'TPAY_RETURN_URL', None):
+        settings_dict = get_tpay_settings()
+        return_url = settings_dict.get('TPAY_RETURN_URL', None)
+        if not return_url:
             return {
                 'error': _('TPAY Return Url musi być ustawiony w settings.'),
             }
@@ -96,7 +102,7 @@ class TPayModule(object):
             },
             'callbacks': {
                 'notification': {
-                    'url': f'{settings.TPAY_RETURN_URL}tpay-ipn/',
+                    'url': f'{return_url}tpay-ipn/',
                 },
             },
             'pay': {

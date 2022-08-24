@@ -54,8 +54,8 @@ class TPayIpnHandler(View):
                     payment.is_finished = True
                     payment.save()
                     self.custom_callback(payment)
-                    return HttpResponse('TRUE')
+                    return HttpResponse(self.success_respose)
         except TPayPayment.DoesNotExist:
             pass
         self.custom_callback(None, True)
-        return HttpResponse(self.success_respose)
+        return HttpResponse(self.failure_response)
