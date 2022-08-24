@@ -6,6 +6,7 @@ from django.conf import settings
 import requests
 
 # Project
+from tpay_module.consts import TPAY_SETTINGS_MODEL_MAPPING
 from tpay_module.models import TPaySettings
 
 
@@ -29,7 +30,25 @@ def get_parsed_tpay_groups():
     return []
 
 
-def get_settings_from_db():
-    """Get settings from db for TPay."""
+def get_tpay_settings(specific_field=None):
+    """Get tpay settings."""
+    obj = None
+    field_list = [
+        'TPAY_RETURN_URL',
+        'TPAY_CLIENT_ID',
+        'TPAY_CLIENT_SECRET',
+    ]
+    if specific_field not in field_list:
+        return None
     if getattr(settings, 'TPAY_ADMIN_SETTINGS', False):
-        return TPaySettings.objects.first()
+        obj = TPaySettings.objects.first()
+    mapping = TPAY_SETTINGS_MODEL_MAPPING if obj else {}
+    result = {}
+    for field in field_list:
+        get_val = getattr(obj, mapping.get(field, None), None)
+        settings_val = getattr(settings, field, None)
+        if get_val:
+            result[field] = get_val
+        elif settings_val:
+            result[field] = settings_val
+    return result

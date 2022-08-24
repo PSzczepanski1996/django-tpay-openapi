@@ -1,6 +1,7 @@
 """Forms file."""
 # Django
 from django import forms
+from django.utils.translation import gettext_lazy as _
 
 # Project
 from tpay_module.models import TPayPayment
@@ -12,15 +13,22 @@ class TPayIPNForm(forms.Form):
     FAILURE_STATUS = 'FALSE'
     SUCCESS_STATUS = 'TRUE'
     status_choices = (
-        (FAILURE_STATUS, 'Failure'),
-        (SUCCESS_STATUS, 'Success'),
+        (FAILURE_STATUS, _('Failure')),
+        (SUCCESS_STATUS, _('Success')),
+    )
+    TEST_MODE = (
+        (0, 'Disabled'),
+        (1, 'Enabled'),
     )
 
     tr_id = forms.CharField(
         max_length=64,
     )
     tr_date = forms.DateTimeField(required=False)
-    tr_crc = forms.ChoiceField()
+    tr_crc = forms.ModelChoiceField(
+        queryset=TPayPayment.objects.all(),
+        to_field_name='number',
+    )
     tr_paid = forms.DecimalField()
     tr_status = forms.ChoiceField(
         choices=status_choices)
@@ -29,8 +37,8 @@ class TPayIPNForm(forms.Form):
 
     def __init__(self, *args, **kwargs):  # noqa: D107
         super().__init__(*args, **kwargs)
-        payment_choices = [
-            (value, value) for value in
-            TPayPayment.objects.values_list('number', flat=True)
-        ]
-        self.fields['tr_crc'].choices = payment_choices
+        # payment_choices = [
+        #     (value, value) for value in
+        #     TPayPayment.objects.values_list('number', flat=True)
+        # ]
+        # self.fields['tr_crc'].choices = payment_choices
