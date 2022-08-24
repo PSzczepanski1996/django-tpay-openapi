@@ -1,8 +1,12 @@
+![django](https://img.shields.io/badge/Django-092E20?style=for-the-badge&logo=django&logoColor=green)
+![python](https://img.shields.io/badge/Python-FFD43B?style=for-the-badge&logo=python&logoColor=blue)
+![json](https://img.shields.io/badge/json-5E5C5C?style=for-the-badge&logo=json&logoColor=white)
+
 # django-tpay-openapi
 
 This is payment broker library for TPay services, it should avoid few (many?) headaches while implementing it with OpenAPI backend, which is quite new.
 
-The current version is highly experimental (and it's just python class module) ~~- in future it should contain enough login to plug-in it as Django application in `INSTALLED_APPS`.**~~
+The current version is highly experimental (and it's just python class module) ~~- in future it should contain enough login to plug-in it as Django application in `INSTALLED_APPS`.~~
 
 ### Features:
 * Django plug-in support that provides additional methods and models
