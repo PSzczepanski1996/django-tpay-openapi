@@ -1,7 +1,7 @@
 """TPay OpenAPI integration."""
 
 # Standard Libraries
-import requests
+# Standard Library
 import uuid
 
 # Django
@@ -10,14 +10,16 @@ from django.http import Http404
 from django.utils.translation import gettext_lazy as _
 
 # 3rd-party
-from djmoney.money import Money
+import requests
 
 
 class TPayModule(object):
     """
     TPay module integration using new OpenAPI.
+
     Based on: https://openapi.tpay.com/
     """
+
     PAY_BY_LINK = 'pay_by_link'
     TRANSFER = 'transfer'
     CARD = 'sale'
@@ -68,7 +70,6 @@ class TPayModule(object):
         amount,
         email,
         name='',
-        source='',
         method=PAY_BY_LINK,
         success_url=None,
         error_url=None,
@@ -126,11 +127,12 @@ class TPayModule(object):
                     user,
                 )
                 return response_data
-        except BaseException as e:  # noqa: D104
+        except BaseException:  # noqa: D104
             pass
         return {}
 
     def pay_for_card_payment(self, transaction_id, card_data):
+        """Pay for payment made by card using card."""
         data = {
             'groupId': self.card_payment_id,
             'cardPaymentData': {
@@ -144,11 +146,12 @@ class TPayModule(object):
                 json=data, headers=self.get_headers(),
             ).json()
             return response_data
-        except BaseException as e:
+        except BaseException:
             pass
         return {}
 
     def pay_by_saved_card(self, transaction_id, card_token):
+        """Pay using saved payment card."""
         data = {
             'groupId': self.card_payment_id,
             'cardPaymentData': {
@@ -162,7 +165,7 @@ class TPayModule(object):
                 json=data, headers=self.get_headers(),
             ).json()
             return response_data
-        except BaseException as e:
+        except BaseException:
             pass
         return {}
 
@@ -174,7 +177,7 @@ class TPayModule(object):
                 json={}, headers=self.get_headers(),
             ).json()
             return response_data
-        except BaseException as e:
+        except BaseException:
             pass
         return {}
 
@@ -193,12 +196,11 @@ class TPayModule(object):
                 json=filter_data, headers=self.get_headers(),
             ).json()
             return response_data
-        except BaseException as e:
+        except BaseException:
             pass
         return {}
 
-    def get_url_address(self, data):
-        """
-        Get url address that proceeds to payment from json data of response.
-        """
+    @staticmethod
+    def get_url_address(data):
+        """Get url address from respones data."""
         return data['transactionPaymentUrl']

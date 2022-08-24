@@ -1,7 +1,14 @@
 """Tpay Module."""
+# Django
 from django.contrib.auth import get_user_model
 from django.db import models
 from django.utils.translation import gettext_lazy as _
+
+# 3rd-party
+from djmoney.models.fields import MoneyField
+
+# Project
+from tpay_module.mixins import SingleInstanceMixin
 
 user_model = get_user_model()
 
@@ -24,6 +31,12 @@ class TPayPayment(models.Model):
         max_length=255, unique=True,
         db_index=True,
     )
+    price = MoneyField(
+        _('Price'),
+        max_digits=14,
+        decimal_places=2,
+        default_currency='PLN',
+    )
     transaction_id = models.CharField(
         _('Transaction ID'),
         max_length=255,
@@ -35,8 +48,8 @@ class TPayPayment(models.Model):
         _('Modified at'), auto_now=True,
     )
 
-    def __str__(self):
-        return f'Transaction {self.number}'
+    def __str__(self):  # noqa: D105
+        return _('Transaction {0}').format(self.number)
 
     class Meta:  # noqa: D106
         verbose_name = _('TPay Payment')
@@ -66,3 +79,33 @@ class SavedTPayCard(models.Model):
     class Meta:  # noqa: D106
         verbose_name = _('Saved TPay Card')
         verbose_name_plural = _('Saved TPay Cards.')
+
+
+class TPaySettings(SingleInstanceMixin, models.Model):
+    """Custom TPay Settings - for admin user."""
+
+    return_url = models.CharField(
+        _('Return URL (IPN)'),
+        max_length=255,
+        blank=True,
+        null=True,
+    )
+    client_id = models.CharField(
+        _('Client ID'),
+        max_length=255,
+        blank=True,
+        null=True,
+    )
+    client_secret = models.CharField(
+        _('Client secret'),
+        max_length=255,
+        blank=True,
+        null=True,
+    )
+
+    def __str__(self):  # noqa: D105
+        return _('TPay Settings')
+
+    class Meta:  # noqa: D106
+        verbose_name = _('TPay Settings')
+        verbose_name_plural = _('TPay Settings')
