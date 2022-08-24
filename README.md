@@ -6,17 +6,19 @@ The current version is highly experimental (and it's just python class module) -
 
 ### Features:
 * Based on *my own* code from working, quite popular project (tested with multiple customers).
-* Just SINGLE dependency (not even Django is required for now, but `requests` library is a must).
 * Probably in future it will depend on Django Money for multicurrency handling.
 * Written in extensible way!
 
-### Settings:
+### Django available custom settings:
 `TPAY_CLIENT_ID` - client ID from tpay settings.  
 `TPAY_CLIENT_SECRET` - secret from tpay settings.  
 `TPAY_RETURN_URL` - TPAY IPN settings, MUST BE SET to django endpoint (can be tested with ngrok).  
 `TPAY_MERCHANT_ID` - as it says... it's tpay merchant id.  
 `TPAY_DESCRIPTION` - TPay payment description.  
 `TPAY_MERCHANT` - TPay merchant description.  
+
+### I need to provide custom admin model for my client, can I do that?
+Sure! The library is made with expandability in mind, so it contains custom admin settings model.
 
 ### Can I get your help?
 Sure, but don't expect I will respond in quite short amount of time. The class can't be plugged by simple way into Django code now,
