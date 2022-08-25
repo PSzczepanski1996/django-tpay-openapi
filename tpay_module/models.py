@@ -66,6 +66,11 @@ class SavedTPayCard(models.Model):
         max_length=4,
         default='0000',
     )
+    payments = models.ManyToManyField(
+        TPayPayment,
+        verbose_name=_('Payments'),
+        blank=True,
+    )
     created_dt = models.DateTimeField(
         _('Created at'), auto_now_add=True)
     last_used = models.DateTimeField(
@@ -78,7 +83,7 @@ class SavedTPayCard(models.Model):
 
     class Meta:  # noqa: D106
         verbose_name = _('Saved TPay Card')
-        verbose_name_plural = _('Saved TPay Cards.')
+        verbose_name_plural = _('Saved TPay Cards')
 
 
 class TPaySettings(SingleInstanceMixin, models.Model):

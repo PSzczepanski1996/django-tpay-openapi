@@ -38,14 +38,14 @@ def get_tpay_settings(specific_field=None):
         'TPAY_CLIENT_ID',
         'TPAY_CLIENT_SECRET',
     ]
-    if specific_field not in field_list:
-        return None
+    if specific_field and specific_field not in field_list:
+        return {}
     if getattr(settings, 'TPAY_ADMIN_SETTINGS', False):
         obj = TPaySettings.objects.first()
     mapping = TPAY_SETTINGS_MODEL_MAPPING if obj else {}
     result = {}
     for field in field_list:
-        get_val = getattr(obj, mapping.get(field, None), None)
+        get_val = getattr(obj, mapping.get(field, ''), None)
         settings_val = getattr(settings, field, None)
         if get_val:
             result[field] = get_val

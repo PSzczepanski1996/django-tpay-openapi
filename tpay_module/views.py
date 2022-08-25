@@ -11,6 +11,7 @@ from django.views import View
 from django.views.decorators.csrf import csrf_exempt
 
 # Project
+from tpay_module.forms import TPayIPNForm
 from tpay_module.models import TPayPayment
 
 
@@ -36,11 +37,10 @@ class TPayIpnHandler(View):
         return super().dispatch(request, *args, **kwargs)
 
     def post(self, request, *args, **kwargs):  # noqa: D102
-        data = request.POST
-        payment_number = data['tr_crc']
-        print(data)
-        try:
-            payment = self.model.objects.get(number=payment_number)
+        form = TPayIPNForm(request.POST)
+        if form.is_valid():
+            data = form.cleaned_data
+            payment = data['tr_crc']
             payment_part = f'{payment.price.amount}{payment.number}'
             secure_code = getattr(settings, 'TPAY_SECURE_CODE', None)
             if secure_code:
@@ -55,7 +55,5 @@ class TPayIpnHandler(View):
                     payment.save()
                     self.custom_callback(payment)
                     return HttpResponse(self.success_respose)
-        except TPayPayment.DoesNotExist:
-            pass
         self.custom_callback(None, True)
         return HttpResponse(self.failure_response)

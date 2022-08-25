@@ -11,8 +11,10 @@ from django.utils.translation import gettext_lazy as _
 
 # 3rd-party
 import requests
+from djmoney.money import Money
 
 # Project
+from tpay_module.models import TPayPayment
 from tpay_module.utils import get_tpay_settings
 
 
@@ -59,14 +61,13 @@ class TPayModule(object):
 
     def save_order_to_db(self, number, price, email, transaction_id, user=None):
         """Save order to db."""
-        pass
-        # return TPayPayment.objects.create(
-        #     number=number,
-        #     price=Money(price, self.default_currency),
-        #     email=email,
-        #     user=user,
-        #     transaction_id=transaction_id,
-        # )
+        return TPayPayment.objects.create(
+            number=number,
+            price=Money(price, self.default_currency),
+            email=email,
+            payer=user,
+            transaction_id=transaction_id,
+        )
 
     def create_transaction(
         self,
@@ -84,7 +85,7 @@ class TPayModule(object):
         return_url = settings_dict.get('TPAY_RETURN_URL', None)
         if not return_url:
             return {
-                'error': _('TPAY Return Url musi być ustawiony w settings.'),
+                'error': _('Return URL of TPay must be set in settings'),
             }
         payer_name = name
         if user and user is not None:

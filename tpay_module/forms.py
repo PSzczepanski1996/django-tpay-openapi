@@ -21,6 +21,9 @@ class TPayIPNForm(forms.Form):
         (1, 'Enabled'),
     )
 
+    id = forms.CharField(
+        max_length=64,
+    )
     tr_id = forms.CharField(
         max_length=64,
     )
@@ -34,11 +37,3 @@ class TPayIPNForm(forms.Form):
         choices=status_choices)
     tr_email = forms.EmailField(
         required=False)
-
-    def __init__(self, *args, **kwargs):  # noqa: D107
-        super().__init__(*args, **kwargs)
-        # payment_choices = [
-        #     (value, value) for value in
-        #     TPayPayment.objects.values_list('number', flat=True)
-        # ]
-        # self.fields['tr_crc'].choices = payment_choices

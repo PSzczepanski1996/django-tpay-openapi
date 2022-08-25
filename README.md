@@ -15,6 +15,7 @@ The current version is highly experimental (and it's just python class module) ~
 * Written in highly abstract and extensible way
 * Is much more clean and has better performance than OpenAPI automatically generated code
 * TPay notification-system (IPN) support
+* Is translated in english language besides Poland
 
 ### Django available custom settings:
 `TPAY_CLIENT_ID` - client ID from tpay settings.  
