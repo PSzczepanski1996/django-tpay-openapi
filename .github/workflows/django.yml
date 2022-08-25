@@ -26,5 +26,5 @@ jobs:
         pip --disable-pip-version-check install --no-compile -r requirements_tests.txt
     - name: Run Tests
       run: |
-        flake8 .
         pytest --cov=testapp --cov=tpay_module
+        flake8 .

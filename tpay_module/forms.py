@@ -37,3 +37,7 @@ class TPayIPNForm(forms.Form):
         choices=status_choices)
     tr_email = forms.EmailField(
         required=False)
+    md5sum = forms.CharField(
+        max_length=32,
+        required=False,
+    )
