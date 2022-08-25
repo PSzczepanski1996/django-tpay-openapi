@@ -1,4 +1,8 @@
 """Factories generation file."""
+# Django
+from django.contrib.auth import get_user_model
+from django.contrib.auth.hashers import make_password
+
 # 3rd-party
 import factory.fuzzy
 from factory.django import DjangoModelFactory
@@ -12,6 +16,26 @@ from tpay_module.tests.utils import MoneyProvider
 
 faker = Faker()
 faker.add_provider(MoneyProvider)
+
+
+class UserFactory(DjangoModelFactory):
+    """User factory class."""
+
+    username = factory.Faker('user_name')
+    first_name = factory.Faker('first_name')
+    last_name = factory.Faker('last_name')
+    email = factory.LazyAttribute(
+        lambda obj: '{0}@{1}'.format(
+            obj.username,
+            'gmail.com',
+        ),
+    )
+    is_staff = False
+    password = factory.LazyAttribute(lambda obj: '{0}'.format(make_password(obj.username)))
+
+    class Meta:  # noqa: D106
+        model = get_user_model()
+        django_get_or_create = ('username',)
 
 
 class TPayPaymentFactory(DjangoModelFactory):

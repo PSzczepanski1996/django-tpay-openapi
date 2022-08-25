@@ -1,6 +1,7 @@
 """Test TPay views."""
 # Standard Library
 import cgi
+import hashlib
 import random
 import string
 
@@ -21,7 +22,7 @@ class TestViews(TestCase):
         pass
 
     @staticmethod
-    def get_random_string(length=0):
+    def get_random_string(length=0):  # noqa: D102
         if not length:
             return ''
         result_list = []
@@ -43,7 +44,7 @@ class TestViews(TestCase):
         self.assertEqual(response.status_code, 404)
 
     @override_settings(TPAY_SECURE_CODE='')
-    def test_tpay_ipn_handler_no_secure_code(self):
+    def test_tpay_ipn_handler_no_secure_code(self):  # noqa: D102
         url = reverse('tpay_ipn')
         payment = TPayPaymentFactory()
         response = self.client.post(url, data={
@@ -59,7 +60,7 @@ class TestViews(TestCase):
         self.assertEqual(response.content.decode(charset), 'FALSE')
 
     @override_settings(TPAY_SECURE_CODE='demo')
-    def test_tpay_ipn_handler_wrong_md5(self):
+    def test_tpay_ipn_handler_wrong_md5(self):  # noqa: D102
         url = reverse('tpay_ipn')
         data_id = random.randint(1000000000, 9999999999)
         data_tr_id = random.randint(1000000000, 9999999999)
@@ -77,3 +78,31 @@ class TestViews(TestCase):
             response.headers['Content-Type'])[1]['charset']
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.content.decode(charset), 'FALSE')
+
+    @override_settings(TPAY_SECURE_CODE='demo')
+    def test_tpay_ipn_request_successful(self):
+        """Test tpay ipn if request is empty."""
+        url = reverse('tpay_ipn')
+        payment = TPayPaymentFactory()
+        get_price = '{:.2f}'.format(payment.price.amount)  # noqa: P101
+        payment_part = f'{get_price}{payment.number}'
+        data_id = random.randint(1000000000, 9999999999)
+        data_tr_id = random.randint(1000000000, 9999999999)
+        secure_code = 'demo'
+        md5sum = hashlib.md5(
+            f'{data_id}{data_tr_id}{payment_part}{secure_code}'.encode('utf-8'),
+        ).hexdigest()
+        response = self.client.post(url, data={
+            'id': data_id,
+            'tr_id': data_tr_id,
+            'tr_crc': payment.number,
+            'tr_paid': get_price,
+            'tr_status': TPayIPNForm.SUCCESS_STATUS,
+            'md5sum': md5sum,
+        })
+        charset = cgi.parse_header(
+            response.headers['Content-Type'])[1]['charset']
+        self.assertEqual(response.status_code, 200)
+        payment.refresh_from_db()
+        self.assertTrue(payment.is_finished)
+        self.assertEqual(response.content.decode(charset), 'TRUE')

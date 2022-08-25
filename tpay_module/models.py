@@ -47,6 +47,10 @@ class TPayPayment(models.Model):
     modified_at = models.DateTimeField(
         _('Modified at'), auto_now=True,
     )
+    is_finished = models.BooleanField(
+        _('Is finished?'),
+        default=False,
+    )
 
     def __str__(self):  # noqa: D105
         return _('Transaction {0}').format(self.number)
