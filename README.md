@@ -19,7 +19,7 @@ The current version is highly experimental (and it's just python class module) ~
 
 ### Installation process:
 Add the TPay app to the `INSTALLED_APPS`:
-```
+```python
 INSTALLED_APPS = [
     ...
     'tpay_module.apps.TpayModuleConfig',
@@ -28,7 +28,7 @@ INSTALLED_APPS = [
 ```
 
 Plug-in TPay notification handler (IPN) for updating statuses into project urls:
-```
+```python
 path('tpay-ipn/', TPayIpnHandler.as_view(), name='tpay_ipn'),
 ```
 
