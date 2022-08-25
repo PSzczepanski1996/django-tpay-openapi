@@ -1,5 +1,5 @@
 """Testing settings file."""
-# 3rd-party
-from .settings import *  # noqa: F403
+# Local
+from .settings import *  # noqa: F401, F403
 
 TPAY_ADMIN_SETTINGS = True
