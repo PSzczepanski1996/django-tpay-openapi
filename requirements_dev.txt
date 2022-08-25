@@ -20,3 +20,6 @@ pydocstyle==5.1.1
 python-coveralls==2.9.3
 sphinx==3.3.0
 autopep8==1.5.4
+pypiserver==1.5.0
+hyperframe==6.0.1
+h2==4.1.0

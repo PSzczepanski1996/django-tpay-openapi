@@ -8,9 +8,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-08-25 08:49+0000\n"
-"PO-Revision-Date: 2022-08-25 08:50+0000\n"
-"Last-Translator: Patryk Szczepański <p.szczepanski996@gmail.com>\n"
+"POT-Creation-Date: 2022-08-25 19:50+0000\n"
+"PO-Revision-Date: 2022-08-25 19:51+0000\n"
+"Last-Translator:   <patryk@webtechnika.pl>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
@@ -35,11 +35,11 @@ msgstr "Niepowodzenie"
 msgid "Success"
 msgstr "Sukces"
 
-#: tpay_module/management/commands/create_test_transaction.py:55
+#: tpay_module/management/commands/create_test_transaction.py:39
 msgid "Created test transaction!"
 msgstr "Utworzono testową transakcję!"
 
-#: tpay_module/management/commands/create_test_transaction.py:62
+#: tpay_module/management/commands/create_test_transaction.py:46
 msgid "The transaction creation failed!"
 msgstr "Tworzenie transakcji zakończono niepowodzeniem!"
 
@@ -59,7 +59,7 @@ msgstr "Cena"
 msgid "Transaction ID"
 msgstr "ID transakcji"
 
-#: tpay_module/models.py:45 tpay_module/models.py:75
+#: tpay_module/models.py:45 tpay_module/models.py:79
 msgid "Created at"
 msgstr "Utworzono o"
 
@@ -67,66 +67,69 @@ msgstr "Utworzono o"
 msgid "Modified at"
 msgstr "Zmodyfikowano o"
 
-#: tpay_module/models.py:52 tpay_module/tests/test_models.py:21
+#: tpay_module/models.py:51
+msgid "Is finished?"
+msgstr "Czy skończone?"
+
+#: tpay_module/models.py:56 tpay_module/tests/test_models.py:21
 #, python-brace-format
 msgid "Transaction {0}"
 msgstr "Transakcja {0}"
 
-#: tpay_module/models.py:55
+#: tpay_module/models.py:59
 msgid "TPay Payment"
 msgstr "Płatność TPay"
 
-#: tpay_module/models.py:56
+#: tpay_module/models.py:60
 msgid "TPay Payments"
 msgstr "Płatności TPay"
 
-#: tpay_module/models.py:63
+#: tpay_module/models.py:67
 msgid "Card token"
 msgstr "Token karty"
 
-#: tpay_module/models.py:65
+#: tpay_module/models.py:69
 msgid "Card expiration code"
 msgstr "Kod wygaśnięcia karty"
 
-#: tpay_module/models.py:71
+#: tpay_module/models.py:75
 msgid "Payments"
 msgstr "Płatności"
 
-#: tpay_module/models.py:77
+#: tpay_module/models.py:81
 msgid "Last used"
 msgstr "Ostatnio użyto"
 
-#: tpay_module/models.py:82 tpay_module/tests/test_models.py:27
+#: tpay_module/models.py:86 tpay_module/tests/test_models.py:27
 #, python-brace-format
 msgid "Saved TPay Card ({0})"
 msgstr "Zapisana karta płatnicza ({0})"
 
-#: tpay_module/models.py:85
+#: tpay_module/models.py:89
 msgid "Saved TPay Card"
 msgstr "Zapisana karta TPay"
 
-#: tpay_module/models.py:86
-#| msgid "Saved TPay Card"
+#: tpay_module/models.py:90
 msgid "Saved TPay Cards"
 msgstr "Zapisane karty TPay"
 
-#: tpay_module/models.py:93
+#: tpay_module/models.py:97
 msgid "Return URL (IPN)"
 msgstr "Adres powrotu (IPN)"
 
-#: tpay_module/models.py:99
+#: tpay_module/models.py:103
 msgid "Client ID"
 msgstr "ID klienta"
 
-#: tpay_module/models.py:105
+#: tpay_module/models.py:109
 msgid "Client secret"
 msgstr "Sekret klienta"
 
-#: tpay_module/models.py:112 tpay_module/models.py:115
-#: tpay_module/models.py:116 tpay_module/tests/test_models.py:33
+#: tpay_module/models.py:116 tpay_module/models.py:119
+#: tpay_module/models.py:120 tpay_module/tests/test_models.py:33
 msgid "TPay Settings"
 msgstr "Ustawienia TPay"
 
-#: tpay_module/tpay_api.py:88
+#: tpay_module/tests/test_api.py:107 tpay_module/tpay_api.py:88
 msgid "Return URL of TPay must be set in settings"
 msgstr "Adres powrotu TPay musi być ustawiony"

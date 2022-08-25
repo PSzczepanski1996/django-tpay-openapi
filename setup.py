@@ -4,7 +4,12 @@ from setuptools import find_packages
 from setuptools import setup
 
 setup(
-    packages=find_packages(),
+    packages=find_packages(
+        exclude=[
+            'testapp',
+            'testapp.tests',
+        ],
+    ),
     install_requires=[
         'requests==2.28.1',
         'django==3.2.15',

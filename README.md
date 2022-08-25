@@ -17,6 +17,24 @@ The current version is highly experimental (and it's just python class module) ~
 * TPay notification-system (IPN) support
 * Is translated in english language besides polish
 
+### Installation process:
+Add the TPay app to the `INSTALLED_APPS`:
+```
+INSTALLED_APPS = [
+    ...
+    'tpay_module.apps.TpayModuleConfig',
+    ...
+]
+```
+
+Plug-in TPay notification handler (IPN) for updating statuses into project urls:
+```
+path('tpay-ipn/', TPayIpnHandler.as_view(), name='tpay_ipn'),
+```
+
+Then, write code that will handle payments using TPayModule class.  
+The examples will be providen soon (how to create transaction and et cetera).
+
 ### Django available custom settings:
 `TPAY_CLIENT_ID` - client ID from tpay settings.  
 `TPAY_CLIENT_SECRET` - secret from tpay settings.  
@@ -27,7 +45,9 @@ The current version is highly experimental (and it's just python class module) ~
 
 ### I need to provide custom admin model for my client, can I do that?
 Sure! The library is made with expandability in mind, so it contains custom admin settings model.
-The model instance is able to override settings from Django if it's necessary.
+The model instance is able to override settings from Django if it's necessary using custom handler logic.
+
+The model in admin is initially disabled, you need to set `TPAY_ADMIN_SETTINGS` to `True` val.
 
 ### Can I get your help?
 Sure, but don't expect I will respond in quite short amount of time. The class can't be plugged by simple way into Django code now,
