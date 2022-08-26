@@ -16,6 +16,7 @@ import pytest
 from djmoney.money import Money
 
 # Project
+from tpay_module.models import TPayPayment
 from tpay_module.tests.factories import UserFactory
 from tpay_module.tpay_api import TPayModule
 from tpay_module.utils import get_parsed_tpay_groups
@@ -244,3 +245,41 @@ class TestTPayModule(TestCase):
             json=lambda: {},
         )
         self.assertEqual(get_parsed_tpay_groups(), [])
+
+    @override_settings(TPAY_RETURN_URL='http://www.google.pl')
+    @patch('tpay_module.tpay_api.TPayModule.get_headers')
+    @patch('requests.post')
+    def test_create_transaction_simple(self, post_mock, headers_mock):
+        """Test create transaction by simple way."""
+        response = {
+            'result': 'success',
+            'transactionId': 123,
+            'testValue': 'testString',
+        }
+        post_mock.return_value = Mock(
+            status_code=200,
+            json=lambda: response,
+        )
+        headers_mock.return_value = {
+            'Authorization': f'Bearer {self.bearer_token}',
+        }
+        user = UserFactory()
+        test_response = self.module.create_transaction(
+            user,
+            0.01,
+            self.tester_email,
+            name='Patrick Szczepański',
+            success_url='http://www.yahoo.pl',
+            error_url='http://stackoverflow.com/',
+        )
+        self.assertEqual(response, test_response)
+        get_payment = TPayPayment.objects.first()
+        self.assertEqual(
+            get_payment.transaction_id,
+            '123',
+        )
+        self.assertEqual(
+            get_payment.price,
+            Money(0.01, self.module.default_currency),
+        )
+        self.assertEqual(get_payment.payer.id, user.id)
