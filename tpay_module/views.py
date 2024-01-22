@@ -45,7 +45,7 @@ class TPayIpnHandler(View):
             secure_code = getattr(settings, 'TPAY_SECURE_CODE', None)
             if secure_code:
                 probable_md5 = hashlib.md5(
-                    f'{data["id"]}{data["tr_id"]}{payment_part}{secure_code}'.encode('utf-8'),
+                    f'{data["id"]}{data["tr_id"]}{payment_part}{secure_code}'.encode('utf-8'),  # noqa: Q000
                 ).hexdigest()
                 get_price = '{:.2f}'.format(float(request.POST['tr_paid']))  # noqa: P101
                 price_check = Decimal(get_price) == payment.price.amount
