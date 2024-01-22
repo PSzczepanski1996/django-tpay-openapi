@@ -36,7 +36,7 @@ class TestTPayModule(TestCase):
 
             def __str__(self):  # noqa: D102
                 if inspect.isclass(self):
-                    return
+                    return ''
                 raise NotImplementedError('You shall not pass!')
 
         self.nope_string_class = NopeStringObject
