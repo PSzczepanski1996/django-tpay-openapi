@@ -1,6 +1,6 @@
 """Test APIs file."""
-import inspect
 # Standard Library
+import inspect
 import random
 from datetime import datetime
 from unittest.mock import Mock
@@ -35,8 +35,6 @@ class TestTPayModule(TestCase):
             """Nope string object."""
 
             def __str__(self):  # noqa: D102
-                if inspect.isclass(self):
-                    return ''
                 raise NotImplementedError('You shall not pass!')
 
         self.nope_string_class = NopeStringObject
