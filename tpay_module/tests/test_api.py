@@ -35,6 +35,8 @@ class TestTPayModule(TestCase):
             """Nope string object."""
 
             def __str__(self):  # noqa: D102
+                if inspect.isclass(self):
+                    return ''
                 raise NotImplementedError('You shall not pass!')
 
         self.nope_string_class = NopeStringObject
@@ -110,8 +112,10 @@ class TestTPayModule(TestCase):
         )
 
     @patch('requests.get')
-    def test_get_transaction_simply(self, mock):
+    @patch('tpay_module.tpay_api.TPayModule.get_headers')
+    def test_get_transaction_simply(self, get_headers, mock):
         """Test get transaction by simple way."""
+        get_headers.return_value = Mock(return_value={})
         mock.return_value = Mock(
             status_code=200,
             json=lambda: {'access_token': self.bearer_token},
