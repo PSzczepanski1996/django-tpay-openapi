@@ -46,8 +46,8 @@ class TPayModule(object):
     def get_headers(self):
         """Get headers for OAuth 2.0 auth using new TPay OpenAPI."""
         settings_dict = get_tpay_settings()
-        tpay_client_id = settings_dict.get('TPAY_CLIENT_ID', None)
-        tpay_client_secret = settings_dict.get('TPAY_CLIENT_SECRET', None)
+        tpay_client_id = settings_dict.get('TPAY_CLIENT_ID')
+        tpay_client_secret = settings_dict.get('TPAY_CLIENT_SECRET')
         if not tpay_client_id or not tpay_client_secret:
             raise Http404
         token_response = requests.post(f'{self.api_url}/oauth/auth', data={
