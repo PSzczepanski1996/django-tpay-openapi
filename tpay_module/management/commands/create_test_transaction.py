@@ -36,13 +36,11 @@ class Command(BaseCommand):
         )
         if response:
             self.stdout.write(self.style.SUCCESS(
-                    _('Created test transaction!'),
-                ),
-            )
+                _('Created test transaction!'),
+            ))
             print('RESPONSE DATA:')
             print(response)
         else:
             self.stdout.write(self.style.ERROR(
-                    _('The transaction creation failed!'),
-                ),
-            )
+                _('The transaction creation failed!'),
+            ))
