@@ -108,7 +108,7 @@ class TestTPayModule(TestCase):
             {'error': _('Return URL of TPay must be set in settings')},
         )
 
-    @patch('requests.post')
+    @patch('requests.get')
     def test_get_transaction_simply(self, mock):
         """Test get transaction by simple way."""
         mock.return_value = Mock(
@@ -118,7 +118,7 @@ class TestTPayModule(TestCase):
         result = self.module.get_transaction('123')
         self.assertEqual(result, {'access_token': self.bearer_token})
 
-    @patch('requests.post')
+    @patch('requests.get')
     def test_get_transaction_with_exception(self, mock):
         """Test get transaction by raising empty data."""
         mock.return_value = Mock(

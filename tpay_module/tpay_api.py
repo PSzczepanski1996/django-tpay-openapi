@@ -179,15 +179,11 @@ class TPayModule(object):
 
     def get_transaction(self, transaction_id):
         """Get certain transaction via transactionId field."""
-        try:
-            response_data = requests.get(
-                f'{self.api_url}/transactions/{transaction_id}',
-                json={}, headers=self.get_headers(),
-            ).json()
-            return response_data
-        except BaseException:
-            pass
-        return {}
+        response_data = requests.get(
+            f'{self.api_url}/transactions/{transaction_id}',
+            json={}, headers=self.get_headers(),
+        ).json()
+        return response_data
 
     def get_all_transactions(self, limit=None, from_dt=None, to_dt=None):
         """FOR NOW dummy method to get list of all transactions."""
